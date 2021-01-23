@@ -11,6 +11,7 @@ Chess game on qt5 framework
 Chess pieces found on https://commons.wikimedia.org/wiki/Category:SVG_chess_pieces/Maurizio_Monge
 made by Maurizio Monge
 
-## Why have you done this?
-Simple answer - for fun. I've decided to check what the hell qml is.
+## Base-Project
+Thanks to https://github.com/zerozez/qt-chess for creating the base of this project
+
 # chess-openings
