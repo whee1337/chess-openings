@@ -30,6 +30,8 @@ class GameEngine : public QObject {
   virtual ~GameEngine();
 
   Q_INVOKABLE void setupBoard();
+  Q_INVOKABLE void setPlayingAsWhite(bool playingAsWhite);
+
   Q_INVOKABLE void clean();
   Q_INVOKABLE void save();
   Q_INVOKABLE void load();
@@ -40,10 +42,10 @@ class GameEngine : public QObject {
 
  public Q_SLOTS:
   void itemClicked(uint x, uint y);
-  void itemClicked(movePair move);
+  void itemClicked(coordinates move);
 
 public:
-  void resetWithMoveSet(PlaySet &ms);
+  void resetWithMoveSet(PlaySet *ms);
 
  private:
   HistoryModel *m_history; /**< Move history*/
@@ -52,7 +54,7 @@ public:
   bool m_isWhite;          /**< WHo is going now */
   FigureIntf *m_lastClick; /**< Figure to move */
   int m_numberOfTurn = 0;
-  PlaySet m_moveset;
+  PlaySet *m_moveset;
 
  private:
   void setFigureWays(FigureIntf *figure);

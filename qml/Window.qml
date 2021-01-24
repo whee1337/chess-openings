@@ -42,6 +42,14 @@ ApplicationWindow {
                     columnLayout1.state = "game"
                 }
             }
+
+            RowLayout {
+                RadioButton {
+                    checked: true
+                    text: qsTr("Playing as White")
+                    onCheckedChanged: GameEngine.setPlayingAsWhite(checked);
+                }
+            }
         }
 
         RowLayout {

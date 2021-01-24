@@ -10,26 +10,26 @@
 #include<QObject>
 
 
-typedef QPair<int,int> movePair;
-typedef QPair<movePair,movePair> turn;
+typedef QPair<int,int> coordinates;
+//typedef QPair<coordinates,coordinates> turn;
 
 class Move
 {
  public:
-    Move(movePair figure, movePair moveField);
+    Move(coordinates figure, coordinates moveField);
     Move(QString figure, QString moveField);
 
-    movePair getFigureField();
-    movePair getNextField();
+    coordinates getFigureField();
+    coordinates getNextField();
 
     static Move toMove(QString move);
 
 private:
-    static movePair toPair(QString movePair);
+    static coordinates toPair(QString coordinates);
     static int letterToInt(QString letter);
 
-    movePair m_targetFigure;
-    movePair m_moveField;
+    coordinates m_targetFigure;
+    coordinates m_moveField;
 };
 
 class Turn{
@@ -56,20 +56,21 @@ class PlaySet
 public:
     PlaySet(QString m_filename, QString prefix);
 
-Move getMove(int i);
+Move getMove(int i,bool whiteTurn);
 bool autoMove(bool whitesMove);
 
 bool isAutoMoveActive();
-void importMoveList(QStringList moveList);
+void setMoveList(QStringList moveList);
 QString name();
 QString getFilename();
 
+void setPlayingAsWhite(bool playingAsWhite);
 
 private:
-std::vector<Turn> turns;
+std::vector<Turn> m_turnSet;
 
 bool m_autoMove = true;
-bool m_PlayingAsBlack = true;
+bool m_PlayingAsWhite = true;
 
 QString m_filename ="";
 QString m_qrcPrefix ="";

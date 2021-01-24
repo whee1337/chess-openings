@@ -24,7 +24,6 @@ QVector<PlaySet*> MoveSetFactory::getMoveVariationList()
     return results;
 }
 
-
 void MoveSetFactory::readMoves(PlaySet* mv)
 {
     QStringList stringList;
@@ -49,6 +48,7 @@ void MoveSetFactory::readMoves(PlaySet* mv)
             else
                 stringList.append(line);
         }
+        mv->setMoveList(stringList);
     }
 
     textFile.close();

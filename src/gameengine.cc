@@ -25,7 +25,8 @@ GameEngine::GameEngine(QObject *parent)
       m_figures(new ChessModel(this)),
       m_isWhite(true),
       m_lastClick(nullptr),
-       m_moveset("",""){
+       m_moveset(new PlaySet("","")){
+
   qmlRegisterUncreatableType<FigureIntf>("com.znocpmp.chess", 1, 0, "Figure",
                                          "");
   qmlRegisterType<ChessModel>("com.znocpmp.chess", 1, 0, "ChessModel");
@@ -81,7 +82,7 @@ QObject *GameEngine::history() {
   return m_history;
 }
 
-void GameEngine::itemClicked(movePair move)
+void GameEngine::itemClicked(coordinates move)
 {
     itemClicked(move.first,move.second);
 }
@@ -101,9 +102,9 @@ void GameEngine::itemClicked(uint x, uint y) {
       m_lastClick = nullptr;
       m_figures->rmHitSpot();
 
-      if(m_moveset.autoMove(m_isWhite))
+      if(m_moveset->autoMove(m_isWhite))
       {
-          auto nextMove = m_moveset.getMove(m_numberOfTurn);
+          auto nextMove = m_moveset->getMove(m_numberOfTurn, m_isWhite);
           itemClicked(nextMove.getFigureField());
       }
 
@@ -120,9 +121,9 @@ void GameEngine::itemClicked(uint x, uint y) {
     setFigureWays(item);
     m_lastClick = item;
 
-    if(m_moveset.autoMove(m_isWhite))
+    if(m_moveset->autoMove(m_isWhite))
     {
-        auto nextMove = m_moveset.getMove(m_numberOfTurn);
+        auto nextMove = m_moveset->getMove(m_numberOfTurn, m_isWhite);
         m_numberOfTurn++;
         itemClicked(nextMove.getNextField());
     }
@@ -155,9 +156,15 @@ void GameEngine::setFigureWays(FigureIntf *figure) {
 }
 
 
-void GameEngine::resetWithMoveSet(PlaySet &ms)
+void GameEngine::resetWithMoveSet(PlaySet *ms)
 {
-    //m_moveset = ms;
+    m_moveset = ms;
+    setupBoard();
+}
+
+void GameEngine::setPlayingAsWhite(bool playinAsWhite)
+{
+    this->m_moveset->setPlayingAsWhite(playinAsWhite);
     setupBoard();
 }
 

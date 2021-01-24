@@ -3,23 +3,24 @@
 #include<QStringList>
 #include<QDebug>
 
-Move::Move(movePair figure, movePair targetField) : m_targetFigure(figure), m_moveField(targetField)
+Move::Move(coordinates figure, coordinates targetField) : m_targetFigure(figure), m_moveField(targetField)
 {
 
 }
 
-movePair Move::getFigureField()
+coordinates Move::getFigureField()
 {
     return m_targetFigure;
 }
 
-movePair Move::getNextField()
+coordinates Move::getNextField()
 {
     return m_moveField;
 }
 
 /*
- * Format = StartField -> e4 | EndField -> a4 = e4a4
+ * Format = e4a4
+ * StartField -> e4 | EndField -> a4
  *
 */
 Move Move::toMove(QString text)
@@ -30,12 +31,12 @@ Move Move::toMove(QString text)
     return Move(toPair(figure), toPair(field));
 }
 
-movePair Move::toPair(QString text)
+coordinates Move::toPair(QString text)
 {
     QString letterX = text.left(1);
     QString posY = text.mid(1);
 
-    return movePair(posY.toInt(), letterToInt(letterX));
+    return coordinates(posY.toInt(), letterToInt(letterX));
 }
 
  int Move::letterToInt(QString string)
@@ -64,15 +65,30 @@ movePair Move::toPair(QString text)
     return 0;
  }
 
+Turn::Turn(Move white , Move black) : m_whiteMove(white), m_blackMove(black)
+{
+
+}
+
+Turn Turn::toTurn(QString str)
+  {
+     QStringList moveList = str.split(",");
+
+     return Turn(Move::toMove(moveList.at(0)),Move::toMove(moveList.at(1)));
+  }
+
+ Move Turn::getBlackMove()
+ {
+     return m_blackMove;
+ }
+
+ Move Turn::getWhiteMove()
+ {
+     return m_whiteMove;
+ }
+
 PlaySet::PlaySet(QString m_filename, QString prefix) : m_filename(m_filename),m_qrcPrefix(prefix)
 {
-//    Move move1(movePair(7,7),movePair(6,7));
-//    Move move2(movePair(7,1),movePair(6,1));
-//    Move move3(Move::toMove("h7h6"));
-
-//    moves_CPU.push_back(move1);
-//    moves_CPU.push_back(move2);
-//    moves_CPU.push_back(move3);
 }
 
 QString PlaySet::name()
@@ -90,9 +106,15 @@ bool PlaySet::isAutoMoveActive()
     return m_autoMove;
 }
 
-void PlaySet::importMoveList(QStringList moveList)
+void PlaySet::setMoveList(QStringList moveList)
 {
+    if(moveList.isEmpty())
+        return;
 
+    for(QString str : moveList)
+    {
+        m_turnSet.push_back(Turn::toTurn(str));
+    }
 }
 
 bool PlaySet::autoMove(bool whitesMove)
@@ -100,13 +122,24 @@ bool PlaySet::autoMove(bool whitesMove)
     if(!isAutoMoveActive())
         return false;
 
-    if(m_PlayingAsBlack)
-        return !whitesMove;
+    if(m_PlayingAsWhite)
+        return whitesMove;
 
-    return whitesMove;
+    return !whitesMove;
 }
 
-Move PlaySet::getMove(int i)
+Move PlaySet::getMove(int i,bool whiteTurn)
 {
-   Move::toMove("asd");
+    Turn turn = m_turnSet.at(i-1);
+
+    if(whiteTurn)
+        return turn.getWhiteMove();
+    else
+        return turn.getBlackMove();
 }
+
+void PlaySet::setPlayingAsWhite(bool playingAsWhite)
+{
+    m_PlayingAsWhite = playingAsWhite;
+}
+

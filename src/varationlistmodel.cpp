@@ -34,8 +34,7 @@ void MoveSetListModel::onClickedModel(int number)
 
     MoveSetFactory::instance().readMoves(mv);
 
-    PlaySet mvTemp("","");
-    m_gameEngine->resetWithMoveSet(mvTemp);
+    m_gameEngine->resetWithMoveSet(mv);
 }
 
 
