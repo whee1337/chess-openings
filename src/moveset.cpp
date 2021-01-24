@@ -139,6 +139,16 @@ bool PlaySet::isTurnListempty()
     return false;
 }
 
+bool PlaySet::getHighlighted() const
+{
+    return m_highlighted;
+}
+
+void PlaySet::setHighlighted(bool highlighted)
+{
+    m_highlighted = highlighted;
+}
+
 Move PlaySet::getMove(int i,bool whiteTurn)
 {
     Turn turn = m_turnSet.at(i);

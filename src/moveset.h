@@ -68,6 +68,9 @@ void setPlayingAsWhite(bool playingAsWhite);
 
 bool isTurnListempty();
 
+bool getHighlighted() const;
+void setHighlighted(bool highlighted);
+
 private:
 std::vector<Turn> m_turnSet;
 
@@ -76,6 +79,8 @@ bool m_PlayingAsWhite = true;
 
 QString m_filename ="";
 QString m_qrcPrefix ="";
+
+bool m_highlighted = false;
 
 };
 

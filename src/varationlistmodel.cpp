@@ -11,6 +11,7 @@ MoveSetListModel::MoveSetListModel(QObject *parent)
 QHash<int, QByteArray> MoveSetListModel::roleNames() const {
     QHash<int, QByteArray> roles;
     roles[NameRole] = "name";
+    roles[HighlightRole] = "highlitght";
 
     return roles;
 }
@@ -21,6 +22,10 @@ QVariant MoveSetListModel::data(const QModelIndex &index, int role) const {
     }
     if(role == NameRole) {
         return QVariant(backing[index.row()]->name());
+    }
+
+    if(role == HighlightRole) {
+        return QVariant(backing[index.row()]->getHighlighted());
     }
 
     return QVariant();

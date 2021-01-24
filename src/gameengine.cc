@@ -68,7 +68,13 @@ void GameEngine::setupBoard() {
 
 void GameEngine::startGame()
 {
+    doAutoMove();
+}
 
+void GameEngine::doAutoMove()
+{
+    itemClicked(2,2);
+    itemClicked(4,2);
 }
 
 void GameEngine::clean() {
@@ -109,11 +115,11 @@ void GameEngine::itemClicked(uint x, uint y) {
       m_lastClick = nullptr;
       m_figures->rmHitSpot();
 
-      if(m_moveset->autoMove(m_isWhite))
+   /*   if(m_moveset->autoMove(m_isWhite))
       {
           auto nextMove = m_moveset->getMove(m_numberOfTurn, m_isWhite);
           itemClicked(nextMove.getFigureField());
-      }
+      } */
 
     } else if (m_lastClick->side() == item->side()) {
       m_lastClick = nullptr;
@@ -127,13 +133,14 @@ void GameEngine::itemClicked(uint x, uint y) {
     qDebug() << "else if ";
     setFigureWays(item);
     m_lastClick = item;
-
+/*
+ *
     if(m_moveset->autoMove(m_isWhite))
     {
         auto nextMove = m_moveset->getMove(m_numberOfTurn, m_isWhite);
         m_numberOfTurn++;
         itemClicked(nextMove.getNextField());
-    }
+    }*/
   }
 }
 

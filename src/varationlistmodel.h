@@ -17,6 +17,7 @@ class MoveSetListModel : public QAbstractListModel
 public:
     enum MoveSetRoles {
         NameRole = Qt::UserRole + 1,
+        HighlightRole = Qt::UserRole,
     };
 
     Q_INVOKABLE void onClickedModel(int number);

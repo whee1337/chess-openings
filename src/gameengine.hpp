@@ -47,6 +47,7 @@ class GameEngine : public QObject {
 public:
   void resetWithMoveSet(PlaySet *ms);
   void startGame();
+  void doAutoMove();
 
  private:
   HistoryModel *m_history; /**< Move history*/
