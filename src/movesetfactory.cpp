@@ -31,11 +31,11 @@ void MoveSetFactory::readMoves(PlaySet* mv)
     QString fileName(mv->getFilename());
     QFile textFile(fileName);
 
-    qDebug()<<"Try open file: "<< fileName <<endl;
+    qDebug()<<"Try open file: "<< fileName ;
 
 
     if(!textFile.open(QIODevice::ReadOnly)) {
-        qDebug()<<"filenot opened"<<endl;
+        qDebug()<<"filenot opened";
     }
     else
     {
@@ -53,9 +53,9 @@ void MoveSetFactory::readMoves(PlaySet* mv)
 
     textFile.close();
     int i = 0;
-    for(auto s : stringList)
+    for(auto const &s : stringList)
     {
-        qDebug()<<"Gelesene Daten aus Datei:" <<s << " " << i<<endl;
+        qDebug()<<"Gelesene Daten aus Datei:" <<s << " " << i;
         i++;
     }
 }

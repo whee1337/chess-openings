@@ -111,7 +111,7 @@ void PlaySet::setMoveList(QStringList moveList)
     if(moveList.isEmpty())
         return;
 
-    for(QString str : moveList)
+    for(QString const &str : moveList)
     {
         m_turnSet.push_back(Turn::toTurn(str));
     }
@@ -122,15 +122,26 @@ bool PlaySet::autoMove(bool whitesMove)
     if(!isAutoMoveActive())
         return false;
 
+    if(isTurnListempty())
+        return false;
+
     if(m_PlayingAsWhite)
         return whitesMove;
 
     return !whitesMove;
 }
 
+bool PlaySet::isTurnListempty()
+{
+    if(m_turnSet.empty())
+        return true;
+
+    return false;
+}
+
 Move PlaySet::getMove(int i,bool whiteTurn)
 {
-    Turn turn = m_turnSet.at(i-1);
+    Turn turn = m_turnSet.at(i);
 
     if(whiteTurn)
         return turn.getWhiteMove();

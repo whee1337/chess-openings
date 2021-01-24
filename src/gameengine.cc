@@ -62,6 +62,13 @@ void GameEngine::setupBoard() {
     // King
     m_figures->addFigure(new FigureKing(place, 5, color));
   }
+
+  startGame();
+}
+
+void GameEngine::startGame()
+{
+
 }
 
 void GameEngine::clean() {

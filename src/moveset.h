@@ -66,6 +66,8 @@ QString getFilename();
 
 void setPlayingAsWhite(bool playingAsWhite);
 
+bool isTurnListempty();
+
 private:
 std::vector<Turn> m_turnSet;
 
