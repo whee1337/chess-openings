@@ -18,7 +18,6 @@ bool ChessModel::removeRows(int row, int count, const QModelIndex& parent) {
   beginRemoveRows(QModelIndex(), row, row + count - 1);
 
   while (count > 0) {
-    qDebug() << "Removing this " << row;
     m_data.removeAt(row);
     count--;
   }
@@ -95,7 +94,6 @@ void ChessModel::rmHitSpot() {
 }
 
 void ChessModel::removeAt(const uint x, const uint y) {
-  qDebug() << "Removing " << x << " and " << y;
   foreach (FigureIntf* item, m_data) {
     if (item->X() == x && item->Y() == y) {
       removeRows(m_data.indexOf(item), 1, QModelIndex());

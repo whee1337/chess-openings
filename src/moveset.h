@@ -57,7 +57,7 @@ public:
     PlaySet(QString m_filename, QString prefix);
 
 Move getMove(int i,bool whiteTurn);
-bool autoMove(bool whitesMove);
+bool autoMove(bool whitesMove, int numberOfTurn);
 
 bool isAutoMoveActive();
 void setMoveList(QStringList moveList);
@@ -65,6 +65,7 @@ QString name();
 QString getFilename();
 
 void setPlayingAsWhite(bool playingAsWhite);
+bool getPlayingAsWhite();
 
 bool isTurnListempty();
 

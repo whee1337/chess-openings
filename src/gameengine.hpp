@@ -48,6 +48,8 @@ public:
   void resetWithMoveSet(PlaySet *ms);
   void startGame();
   void doAutoMove();
+  void doMove(Move move);
+  void resetBoard();
 
  private:
   HistoryModel *m_history; /**< Move history*/

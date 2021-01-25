@@ -35,6 +35,12 @@ GameEngine::GameEngine(QObject *parent)
 GameEngine::~GameEngine() {}
 
 void GameEngine::setupBoard() {
+
+  m_numberOfTurn = 0;
+  m_isWhite = true;
+
+  resetBoard();
+
   for (int row = 0; row < 2; row++) {
     FigureIntf::Color color = row == 0 ? FigureIntf::Black : FigureIntf::White;
     int place = 8 - 7 * row;
@@ -66,16 +72,53 @@ void GameEngine::setupBoard() {
   startGame();
 }
 
+void GameEngine::resetBoard()
+{
+    for(int i=1;i<10;i++)
+    {
+        for(int n=1;n<10;n++)
+        {
+            m_figures->removeAt(i,n);
+        }
+    }
+}
+
+
 void GameEngine::startGame()
 {
-    doAutoMove();
+    if(!m_moveset->getPlayingAsWhite() && !m_moveset->isTurnListempty())
+   {
+        doMove(m_moveset->getMove(m_numberOfTurn,true));
+        m_isWhite = false;
+    }
 }
 
 void GameEngine::doAutoMove()
 {
-    itemClicked(2,2);
-    itemClicked(4,2);
+    qDebug()<<"Do auto move";
+   // itemClicked(2,2);
+   // itemClicked();
+
+    FigureIntf *item = m_figures->getFigure(2,2);
+    item->moveTo(3,2);
+
+    m_figures->rmHitSpot();
+
 }
+
+void GameEngine::doMove(Move move)
+{
+    coordinates figureField =move.getFigureField();
+    coordinates nextField = move.getNextField();
+
+    FigureIntf *item = m_figures->getFigure(figureField.first,figureField.second);
+
+    m_figures->removeAt(nextField.first,nextField.second);
+    item->moveTo(nextField.first,nextField.second);
+
+    m_figures->rmHitSpot();
+}
+
 
 void GameEngine::clean() {
   m_figures->erase();
@@ -115,34 +158,32 @@ void GameEngine::itemClicked(uint x, uint y) {
       m_lastClick = nullptr;
       m_figures->rmHitSpot();
 
-   /*   if(m_moveset->autoMove(m_isWhite))
-      {
-          auto nextMove = m_moveset->getMove(m_numberOfTurn, m_isWhite);
-          itemClicked(nextMove.getFigureField());
-      } */
+      m_numberOfTurn++;
 
+      if(m_moveset!= nullptr && m_moveset->autoMove(m_isWhite, m_numberOfTurn))
+      {
+          qDebug() << "start automove";
+
+          auto nextMove = m_moveset->getMove(m_numberOfTurn, m_isWhite);
+         //itemClicked(nextMove.getFigureField());
+          doMove(nextMove);
+          m_isWhite = !m_isWhite;
+      }
     } else if (m_lastClick->side() == item->side()) {
       m_lastClick = nullptr;
       m_figures->rmHitSpot();
       itemClicked(x, y);
     }
-  }
+    }
   // Moves order
   else if ((item->side() == FigureIntf::Black) ^ m_isWhite) {
     item->defMoveList()->clear();
     qDebug() << "else if ";
     setFigureWays(item);
     m_lastClick = item;
-/*
- *
-    if(m_moveset->autoMove(m_isWhite))
-    {
-        auto nextMove = m_moveset->getMove(m_numberOfTurn, m_isWhite);
-        m_numberOfTurn++;
-        itemClicked(nextMove.getNextField());
-    }*/
   }
 }
+
 
 void GameEngine::setFigureWays(FigureIntf *figure) {
   qDebug() << "loading ways to move";
@@ -172,6 +213,11 @@ void GameEngine::setFigureWays(FigureIntf *figure) {
 
 void GameEngine::resetWithMoveSet(PlaySet *ms)
 {
+    if(m_moveset!=nullptr)
+    {
+        ms->setPlayingAsWhite(m_moveset->getPlayingAsWhite());
+    }
+
     m_moveset = ms;
     setupBoard();
 }

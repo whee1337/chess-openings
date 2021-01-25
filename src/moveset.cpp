@@ -117,7 +117,7 @@ void PlaySet::setMoveList(QStringList moveList)
     }
 }
 
-bool PlaySet::autoMove(bool whitesMove)
+bool PlaySet::autoMove(bool whitesMove, int numberOfTurn)
 {
     if(!isAutoMoveActive())
         return false;
@@ -125,10 +125,13 @@ bool PlaySet::autoMove(bool whitesMove)
     if(isTurnListempty())
         return false;
 
-    if(m_PlayingAsWhite)
-        return whitesMove;
+    if(m_turnSet.size() <= numberOfTurn)
+        return false;
 
-    return !whitesMove;
+    if(m_PlayingAsWhite)
+        return !whitesMove;
+    else
+        return whitesMove;
 }
 
 bool PlaySet::isTurnListempty()
@@ -164,3 +167,7 @@ void PlaySet::setPlayingAsWhite(bool playingAsWhite)
     m_PlayingAsWhite = playingAsWhite;
 }
 
+bool PlaySet::getPlayingAsWhite()
+{
+    return m_PlayingAsWhite;
+}
