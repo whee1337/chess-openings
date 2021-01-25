@@ -80,15 +80,35 @@ ApplicationWindow {
                 anchors.right: parent.right;
 
                 model: DemoModel
-                delegate:
-                    Text {
+                Component.onCompleted:{
+                        DemoModel.onClickedModel(currentIndex);
+                }
+
+                delegate: ListItemMoveset{
+                    movesetName: name;
+                    highlighted: list.currentIndex == index ? true : false;
+                    width: list.width;
+
+                    onCustomClick: {
+                        list.currentIndex = index;
+                        DemoModel.onClickedModel(index)
+                    }
+                }
+
+
+
+     /*               Text {
                     property int indexOfThisDelegate: index
                      text: name
                      MouseArea {
                      anchors.fill: parent
                       onClicked: DemoModel.onClickedModel(index)
                     }
-                 }
+                 }*/
+
+
+
+
             }
         }
 
