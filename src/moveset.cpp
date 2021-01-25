@@ -164,6 +164,16 @@ Move PlaySet::getMove(int i,bool whiteTurn)
         return turn.getBlackMove();
 }
 
+Move PlaySet::getExpectedMove(int i)
+{
+    Turn turn = m_turnSet.at(i);
+
+    if(m_PlayingAsWhite)
+        return turn.getWhiteMove();
+    else
+        return turn.getBlackMove();
+}
+
 void PlaySet::setPlayingAsWhite(bool playingAsWhite)
 {
     m_PlayingAsWhite = playingAsWhite;

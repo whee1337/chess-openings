@@ -57,6 +57,7 @@ public:
     PlaySet(QString m_filename, QString prefix);
 
 Move getMove(int i,bool whiteTurn);
+Move getExpectedMove(int i);
 bool autoMove(bool whitesMove, int numberOfTurn);
 
 bool isAutoMoveActive();

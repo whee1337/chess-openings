@@ -149,6 +149,18 @@ void GameEngine::itemClicked(uint x, uint y) {
   if (m_lastClick != nullptr) {
     if (m_lastClick->moveList().indexOf(QPair<uint, uint>(x, y)) != -1) {
 
+      auto expMove = m_moveset->getExpectedMove(m_numberOfTurn);
+
+      if(expMove.getNextField() != coordinates(x,y))
+      {
+          m_lastClick = nullptr;
+          turnDone(false);
+          return;
+      }
+
+      turnDone(true);
+
+
       m_figures->removeAt(x, y);
       m_lastClick->moveTo(x, y);
 
