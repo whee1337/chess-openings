@@ -5,6 +5,8 @@
         <file>qml/ChessFigure.qml</file>
         <file>qml/History.qml</file>
         <file>qml/GameFDialog.qml</file>
+        <file>qml/ListItemMoveset.qml</file>
+        <file>qml/MoveController.qml</file>
     </qresource>
     <qresource prefix="/qt-chess/img">
         <file>images/c_bb.svg</file>
@@ -21,8 +23,9 @@
         <file>images/c_wr.svg</file>
         <file>images/point.svg</file>
     </qresource>
-   <qresource>
+    <qresource prefix="/">
         <file>movesets/test.txt</file>
-        <file>movesets/test2.txt</file>
+        <file>movesets/test2.txt</file> 
+	<file>movesets/LettischesGambit.txt</file>
     </qresource>
 </RCC>

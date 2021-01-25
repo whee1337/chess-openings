@@ -113,6 +113,8 @@ void PlaySet::setMoveList(QStringList moveList)
 
     for(QString const &str : moveList)
     {
+        if(str.isNull() || str.isEmpty())
+            continue;
         m_turnSet.push_back(Turn::toTurn(str));
     }
 }

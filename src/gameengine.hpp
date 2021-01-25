@@ -23,7 +23,6 @@ class FigureIntf;
 class HistoryModel;
 class GameEngine : public QObject {
   Q_OBJECT
-  // Q_PROPERTY(QQmlListProperty<FigureIntf> figures READ figures)
 
  public:
   explicit GameEngine(QObject *parent = 0);
@@ -43,6 +42,10 @@ class GameEngine : public QObject {
  public Q_SLOTS:
   void itemClicked(uint x, uint y);
   void itemClicked(coordinates move);
+
+public:
+signals:
+  void turnDone(bool value);
 
 public:
   void resetWithMoveSet(PlaySet *ms);

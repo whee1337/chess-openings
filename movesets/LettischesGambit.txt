@@ -1,0 +1,10 @@
+e2e4,e7e5
+g1f3,f7f5
+f3e5,d8f6
+d2d4,d7d6
+e5c3,f5e4
+b1c3,f6g6
+f2f3,e4f3
+d1f3,b8c6
+f1d3,g6g4
+

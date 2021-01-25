@@ -50,6 +50,24 @@ ApplicationWindow {
                     onCheckedChanged: GameEngine.setPlayingAsWhite(checked);
                 }
             }
+
+            MoveController
+            {
+                id: turnShower;
+                width: 100;
+                height: 100;
+                anchors.right:columnLayout1.right;
+            }
+
+            Connections {
+            target: GameEngine
+                onTurnDone: {
+                    console.log("connction to game engine: " + value);
+
+                 turnShower.itemVisibility=true;
+                 turnShower.showRight = value;
+                }
+            }
         }
 
         RowLayout {

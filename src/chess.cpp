@@ -31,6 +31,8 @@ int main(int argc, char* argv[]) {
   GameEngine* ge;
   engine.rootContext()->setContextProperty("GameEngine", ge = new GameEngine);
 
+  emit ge->turnDone("Test");
+
   MoveSetListModel* dm;
   engine.rootContext()->setContextProperty("DemoModel", dm = new MoveSetListModel);
 

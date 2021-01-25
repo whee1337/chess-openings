@@ -30,7 +30,7 @@ Item
         Text {
             text: root.movesetName
             color: root.highlighted ? "white" : "black";
-            anchors.fill: parent;
+            anchors.fill : parent;
         }
     }
 }
